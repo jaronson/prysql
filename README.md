@@ -23,6 +23,7 @@ the pry console. Only Mysql is supported at present. Features include:
     Examples:
       `prysql count users`
       `prysql SELECT id, email FROM users`
+      `local_variable = prysql count zip_codes`
       `local_variable = prysql SELECT * FROM zip_codes`
 
     Available commands:
