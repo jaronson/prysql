@@ -1,10 +1,10 @@
 source :rubygems
 
-gem 'trollop'
+gem 'thor'
 gem 'coderay'
 gem 'mysql2'
+gem 'pry'
 
 group :development do
-  gem 'pry'
   gem 'rspec'
 end
