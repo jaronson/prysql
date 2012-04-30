@@ -25,6 +25,8 @@ the `prysql` command:
     | accounts                   | username                      | varchar(255) | YES    | 0         |
     +----------------------------+-------------------------------+--------------+--------+-----------+
 
+(if we were running in the console, `user` would be highlighted in the results above)
+
     pry(main)> prysql SELECT id, email FROM users LIMIT 1
     +--------+------------------+
     | id     | email            |
@@ -34,13 +36,13 @@ the `prysql` command:
 
 Toggle `prysql-mode` (aliased as `sql-mode`) to get new prompt and run SQL queries directly:
 
-  pry(main)> sql-mode
-  prysql root@localhost [app_dev]> DESCRIBE schema_migrations
-  +---------+--------------+------+-----+---------+-------+
-  | Field   | Type         | Null | Key | Default | Extra |
-  +---------+--------------+------+-----+---------+-------+
-  | version | varchar(255) | NO   | PRI | NULL    |       |
-  +---------+--------------+------+-----+---------+-------+
+    pry(main)> sql-mode
+    prysql root@localhost [app_dev]> DESCRIBE schema_migrations
+    +---------+--------------+------+-----+---------+-------+
+    | Field   | Type         | Null | Key | Default | Extra |
+    +---------+--------------+------+-----+---------+-------+
+    | version | varchar(255) | NO   | PRI | NULL    |       |
+    +---------+--------------+------+-----+---------+-------+
 
 ### Subcommands
   use              Switch to a new schema.
