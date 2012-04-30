@@ -4,7 +4,7 @@ prysql
 Prysql is an extension to [Pry](http://github.com/pry/pry) that provides a SQL interface within
 the pry console. Only Mysql is supported at present. Features include:
 
-* Subcommand shortcuts (search columns by pattern, show counts across all databases, etc.)
+* Subcommand shortcuts (search columns by pattern, show counts across all tables, etc.)
 * Result formatting ala the mysql console (with colors!)
 * Search highlighting
 * Table & column completion
