@@ -20,6 +20,7 @@ Pass a command name or SQL query (unquoted) directly to prysql.
 Examples:
   `prysql count users`
   `prysql SELECT id, email FROM users`
+  `local_variable = prysql SELECT * FROM zip_codes`
 
 Available commands:
 #{Prysql::Interface.formatted_commands}
