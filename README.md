@@ -40,6 +40,16 @@ the pry console. Only Mysql is supported at present. Features include:
             -v, --vertical      Print output in vertical format.
             -h, --help          Show this message.
 
+### Setup
+
+Put this somewhere in your .pryrc:
+
+    Prysql.setup({
+      :username => 'your-username',
+      :password => 'your-password',
+      :database => 'your-database'
+    })
+
 ### Subcommands
 
 Excute subcommands within your pry session by using the `prysql` command:
@@ -67,7 +77,7 @@ Execute SQL statements with the `prysql` command:
 
 ### SQL Mode
 
-Toggle `prysql-mode` (aliased as `sql-mode`) to get new prompt and run SQL queries directly:
+Toggle `prysql-mode` (aliased as `sql-mode`) to get a new prompt and run SQL queries directly:
 
     pry(main)> sql-mode
     prysql root@localhost [app_dev]> DESCRIBE schema_migrations

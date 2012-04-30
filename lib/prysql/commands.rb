@@ -52,7 +52,7 @@ module Prysql::Commands
 
     def help(cmd = nil, args = [])
       if cmd == 'help'
-        shell.say(Prysql::GlobalCommandSet.commands['prysql'].new.help)
+        return shell.say(Prysql::GlobalCommandSet.commands['prysql'].new.help)
       elsif has_command?(cmd)
         method     = command_to_method(cmd)
         parameters = parameters_for(method)
