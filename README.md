@@ -12,7 +12,7 @@ the pry console. Only Mysql is supported at present. Features include:
 * Ability to assign output of queries to local variables
 * Toggle-able SQL shell
 
-From the help:
+### Banner
 
         Usage:
           prysql [COMMAND] [ARGUMENTS] [--vertical]
