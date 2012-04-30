@@ -1,20 +1,21 @@
 # -*- encoding: utf-8 -*-
+require File.expand_path('../lib/prysql/version', __FILE__)
 
 Gem::Specification.new do |s|
-  s.name    = 'prysql'
-  s.version = '0.0.1'
+  s.name        = 'prysql'
+  s.version     = Prysql::VERSION
 
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.summary     = 'Pry mysql interface'
+  s.description = 'An extension to Pry that provides a SQL interface within the pry session'
 
   s.authors     = ['Josh Aronson (jaronson)']
-  s.date        = '2012-04-27'
-  s.description = 'A ruby console for mysql'
   s.email       = 'jparonson@gmail.com'
-  s.files       = [ '.gitignore','Gemfile', 'lib/prysql.rb']
   s.homepage    = 'http://github.com/jaronson/prysql'
-  s.summary     = 'An interactive ruby console for mysql'
 
-  if s.respond_to?(:specification_version)
-    s.specification_version = 3
-  end
+  s.files       = Dir[
+    'Gemfile',
+    '{bin,lib,spec}/**/*',
+    'README*',
+    'LICENSE*'
+  ] & `git ls-files -z`.split("\0")
 end
