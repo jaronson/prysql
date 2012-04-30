@@ -37,8 +37,8 @@ the pry console. Only Mysql is supported at present. Features include:
 
         options:
 
-            -v, --vertical      Print output in vertical format
-            -h, --help          Show this message.Type `prysql help` for more usage information.
+            -v, --vertical      Print output in vertical format.
+            -h, --help          Show this message.
 
 ### Subcommands
 
