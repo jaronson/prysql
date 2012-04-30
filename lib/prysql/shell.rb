@@ -137,6 +137,7 @@ class Prysql::Shell < Thor::Shell::Color
   def format_sql_rows(rows, options)
     rows = colorize_sql_rows(format_table_rows(rows, options))
     highlight(options[:highlight], rows) if options[:highlight]
+    rows
   end
 
   def format_table_rows(rows, options)
