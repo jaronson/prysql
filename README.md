@@ -14,8 +14,7 @@ the pry console. Only Mysql is supported at present. Features include:
 
 ### Querying
 
-Excute subcommands or SQL queries within your pry session by using
-the `prysql` command:
+Excute subcommands within your pry session by using the `prysql` command:
 
     pry(main)> prysql search-columns user
     +----------------------------+-------------------------------+--------------+--------+-----------+
@@ -25,7 +24,9 @@ the `prysql` command:
     | accounts                   | username                      | varchar(255) | YES    | 0         |
     +----------------------------+-------------------------------+--------------+--------+-----------+
 
-(if we were running in the console, `user` would be highlighted in the results above)
+If we were running in the console, `user` would be highlighted in the results above.
+
+Execute SQL statements with the `prysql` command:
 
     pry(main)> prysql SELECT id, email FROM users LIMIT 1
     +--------+------------------+
