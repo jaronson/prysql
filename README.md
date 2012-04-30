@@ -1,7 +1,7 @@
 prysql
 ======
 
-Prysql is an extension to [Pry](http://github.com/pry/pry) providing a direct SQL interface within
+Prysql is an extension to [Pry](http://github.com/pry/pry) that provides a SQL interface within
 the pry console. Only Mysql is supported at present. Features include:
 
 * Subcommand shortcuts (search columns by pattern, show counts across all databases, etc.)
