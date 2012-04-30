@@ -135,7 +135,8 @@ class Prysql::Shell < Thor::Shell::Color
   end
 
   def format_sql_rows(rows, options)
-    colorize_sql_rows(format_table_rows(rows, options))
+    rows = colorize_sql_rows(format_table_rows(rows, options))
+    highlight(options[:highlight], rows) if options[:highlight]
   end
 
   def format_table_rows(rows, options)
@@ -213,6 +214,25 @@ class Prysql::Shell < Thor::Shell::Color
       else
         str
     end
+  end
+
+  # TODO: This is hacked to only highlight the last match
+  # found for search_columns
+  def highlight(hi, rows)
+    rows.map{|row|
+      res = row.scan(/#{hi}/i)
+
+      if res.any?
+        offset = Regexp.last_match.offset(0)
+        [
+          row[0..offset[0]-1],
+          set_color(row[offset[0]..offset[1]-1], :green, :bold),
+          row[offset[1]..row.size]
+        ].join('')
+      else
+        row
+      end
+    }
   end
 
   def newline

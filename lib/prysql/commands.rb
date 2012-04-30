@@ -73,16 +73,15 @@ module Prysql::Commands
     end
 
     def info
-      shell.print_title('Prysql Info')
+      shell.say_status('Prysql Info')
       table = [
         [ :host, host ],
         [ :username, username ],
         [ :database, database ]
       ]
       shell.print_table(table, :indent  => 2, :format => :ruby)
-      newline
 
-      shell.print_title('Mysql2 Client Settings')
+      shell.say_status('Mysql2 Client Settings')
       shell.print_hash(client.query_options, { :indent => 2 })
     end
 
@@ -114,7 +113,8 @@ module Prysql::Commands
     def search_columns(search)
       result = column_select({
         :conditions => "column_name LIKE '%#{search}%'",
-        :order      => 'table_name'
+        :order      => 'table_name',
+        :options    => { :highlight => search }
       })
     end
 
@@ -196,7 +196,8 @@ module Prysql::Commands
 
       statement = [ select, conditions, order ].join("\n")
 
-      execute(statement)
+      options = params[:options] || {}
+      execute(statement, options)
     end
 
     def require_parameters(method, args)
