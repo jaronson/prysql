@@ -73,12 +73,17 @@ BANNER
 
   SQLModeCommandSet = Pry::CommandSet.new do
     SQL_COMMANDS.each do |sql_command|
-      create_command(/^(#{sql_command}.*)/i, :listing => "#{sql_command.upcase} ...") do |sql|
+      create_command(/^(#{sql_command})(.*)/i, :listing => "#{sql_command.upcase} ...") do
         group 'Prysql shell mode'
         description "Perform a SQL #{sql_command.upcase} statement."
 
-        def process(sql)
-          Prysql.interface.execute(sql)
+        def options(opt)
+          opt.on :v, :vertical, 'Print output in vertical format', :optional => true
+        end
+
+        # TODO: Get options to work here!
+        def process
+          Prysql.interface.execute(captures, cmd_opts)
         end
       end
 
