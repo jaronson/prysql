@@ -42,7 +42,7 @@ the pry console. Only Mysql is supported at present. Features include:
 
 ### Setup
 
-Put this somewhere in your .pryrc:
+Put this somewhere in your .pryrc (or you can call `pryrc setup` from pry):
 
     Prysql.setup({
       :username => 'your-username',
