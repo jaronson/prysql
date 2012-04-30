@@ -39,6 +39,29 @@ class Prysql::Interface
     @client
   end
 
+  def query(sql)
+    @retry_attempts ||= 0
+
+    begin
+      client.query(sql)
+    rescue Mysql2::Error => e
+      if e.to_s == 'closed MySQL connection'
+        @retry_attempts += 1
+        if @retry_attempts > 1
+          raise e
+        else
+          reconnect!
+          retry
+        end
+      end
+    end
+  end
+
+  def reconnect!
+    @client = nil
+    client
+  end
+
   def completions
     if @completions.nil? || @completions[:schema] != database
       @completions = get_completions
@@ -47,19 +70,14 @@ class Prysql::Interface
     @completions[:completions]
   end
 
-  def reconnect!
-    @client = nil
-    client
-  end
-
   protected
   def get_completions
     completions = []
 
-    client.query("SHOW TABLES").each do |row|
+    query("SHOW TABLES").each do |row|
       table = row.first
       completions << table
-      client.query(%{
+      query(%{
         SELECT COLUMN_NAME
         FROM information_schema.COLUMNS
         WHERE TABLE_NAME = '#{table}'

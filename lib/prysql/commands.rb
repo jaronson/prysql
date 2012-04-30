@@ -119,16 +119,16 @@ module Prysql::Commands
     end
 
     def count(table)
-      result = client.query("SELECT COUNT(*) AS `#{table} count` FROM `#{table}`")
+      result = query("SELECT COUNT(*) AS `#{table} count` FROM `#{table}`")
       shell.print_result(result)
     end
 
     def show_all_counts
       rows = []
 
-      client.query("SHOW TABLES").each do |row|
+      query("SHOW TABLES").each do |row|
         table = row.first
-        count = client.query("SELECT COUNT(*) FROM #{table}").first.first
+        count = query("SELECT COUNT(*) FROM #{table}").first.first
         rows << [ table, count ]
       end
 
@@ -153,7 +153,7 @@ module Prysql::Commands
         q = q.strip.chomp
         if !q.nil? && !q.empty?
           begin
-            result = client.query(q)
+            result = query(q)
           rescue Mysql2::Error => e
             shell.say_status(:error, "Mysql2::Error: #{e.message}")
             shell.say("SQL: #{sql}", { :lang => :sql, :colorize => true, :indent => 2 })
