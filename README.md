@@ -45,12 +45,12 @@ Toggle `prysql-mode` (aliased as `sql-mode`) to get new prompt and run SQL queri
     +---------+--------------+------+-----+---------+-------+
 
 ### Subcommands
-  use              Switch to a new schema.
-  edit             Open a new temp file with $EDITOR for query editing to be run on close.
-  show-columns     Show columns for a given table (in alphabetical order).
-  search-columns   Search across all tables for a column.
-  count            Print the record count for a given table.
-  show-all-counts  Print counts across all tables.
+    use              Switch to a new schema.
+    edit             Open a new temp file with $EDITOR for query editing to be run on close.
+    show-columns     Show columns for a given table (in alphabetical order).
+    search-columns   Search across all tables for a column.
+    count            Print the record count for a given table.
+    show-all-counts  Print counts across all tables.
 
 ### TODO
 * Add support for more databases (Postgres, sqlite, etc.)
