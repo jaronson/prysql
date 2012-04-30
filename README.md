@@ -14,32 +14,32 @@ the pry console. Only Mysql is supported at present. Features include:
 
 ### Banner
 
-        Usage:
-          prysql [COMMAND] [ARGUMENTS] [--vertical]
-          prysql [SQL]
+    Usage:
+      prysql [COMMAND] [ARGUMENTS] [--vertical]
+      prysql [SQL]
 
-        Pass a command name or SQL query (unquoted) directly to prysql.
+    Pass a command name or SQL query (unquoted) directly to prysql.
 
-        Examples:
-          `prysql count users`
-          `prysql SELECT id, email FROM users`
-          `local_variable = prysql SELECT * FROM zip_codes`
+    Examples:
+      `prysql count users`
+      `prysql SELECT id, email FROM users`
+      `local_variable = prysql SELECT * FROM zip_codes`
 
-        Available commands:
-           info             Print the current Mysql2 client info.                e.g.: `prysql info`                                                                                   
-           setup            Setup the prysql interface.                          e.g.: `prysql setup { host: "localhost", username: "root", password: "p12345", database: "testdb" }`  
-           use              Switch to the given schema.                          e.g.: `prysql use db_name`                                                                            
-           edit             Open a temp file with $EDITOR & run query on close.  e.g.: `prysql edit`                                                                                   
-           show-columns     Show columns for a given table.                      e.g.: `prysql show-columns users`                                                                     
-           search-columns   Search across all tables for a column or substring.  e.g.: `prysql search-columns substr`                                                                  
-           count            Print the record count for a given table.            e.g.: `prysql count users`                                                                            
-           show-all-counts  Print counts across all tables.                      e.g.: `prysql show-all-counts`                                                                        
-           execute          Execute a SQL query.                                 e.g.: `prysql execute SELECT * FROM users`                                                            
+    Available commands:
+       info             Print the current Mysql2 client info.                e.g.: `prysql info`                                                                                   
+       setup            Setup the prysql interface.                          e.g.: `prysql setup { host: "localhost", username: "root", password: "p12345", database: "testdb" }`  
+       use              Switch to the given schema.                          e.g.: `prysql use db_name`                                                                            
+       edit             Open a temp file with $EDITOR & run query on close.  e.g.: `prysql edit`                                                                                   
+       show-columns     Show columns for a given table.                      e.g.: `prysql show-columns users`                                                                     
+       search-columns   Search across all tables for a column or substring.  e.g.: `prysql search-columns substr`                                                                  
+       count            Print the record count for a given table.            e.g.: `prysql count users`                                                                            
+       show-all-counts  Print counts across all tables.                      e.g.: `prysql show-all-counts`                                                                        
+       execute          Execute a SQL query.                                 e.g.: `prysql execute SELECT * FROM users`                                                            
 
-        options:
+    options:
 
-            -v, --vertical      Print output in vertical format.
-            -h, --help          Show this message.
+        -v, --vertical      Print output in vertical format.
+        -h, --help          Show this message.
 
 ### Setup
 
