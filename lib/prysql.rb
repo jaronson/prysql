@@ -13,4 +13,4 @@ require 'prysql/commands'
 require 'prysql/interface'
 require 'prysql/base'
 
-Pry::Commands.import Prysql::GlobalCommandSet
+Pry::Commands.import Prysql::CommandSet
