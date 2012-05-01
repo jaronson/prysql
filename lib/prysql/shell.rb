@@ -194,7 +194,7 @@ class Prysql::Shell < Thor::Shell::Color
       when /^int\([0-9]+\)/, /^[0-9]+$/
         set_color(str, :blue)
       # Float, Decimal
-      when /^float\([0-9]+,[0-9]+\)/, /^decimal\([0-9]+,[0-9]+\)/, /^[-+]?[0-9]*\.?[0-9]+$/
+      when /^float\([0-9]+,[0-9]+\)/, /^float$/, /^decimal\([0-9]+,[0-9]+\)/, /^decimal$/, /^[-+]?[0-9]*\.?[0-9]+$/
         set_color(str, :cyan)
       # Date
       when /^datetime$/, /^date$/, /^[0-9]{4}-[0-9]{2}-[0-9]{2}/
@@ -211,7 +211,7 @@ class Prysql::Shell < Thor::Shell::Color
         set_color(str, :red)
       # Null
       when /^NULL$/
-        set_color(str, :cyan, :true)
+        set_color(str, :cyan, :bold)
       else
         str
     end
