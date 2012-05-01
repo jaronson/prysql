@@ -2,7 +2,7 @@ prysql
 ======
 
 Prysql is an extension to [Pry](http://github.com/pry/pry) that provides a SQL interface within
-the pry console. Only Mysql is supported at present. Features include:
+your session. Only Mysql is supported at present. Features include:
 
 * Subcommand shortcuts (search columns by pattern, show counts across all tables, etc.)
 * Result formatting ala the mysql console (with colors!)
@@ -64,7 +64,7 @@ Excute subcommands within your pry session by using the `prysql` command:
     | accounts                   | username                      | varchar(255) | YES    | 0         |
     +----------------------------+-------------------------------+--------------+--------+-----------+
 
-If we were running in the console, `user` would be highlighted in the results above.
+If we were running in the console, the search string `user` would be highlighted in the results above.
 
 ### Querying
 
@@ -91,6 +91,7 @@ Toggle `prysql-mode` (aliased as `sql-mode`) to get a new prompt and run SQL que
 
 ### TODO
 
-* Add support for more databases (Postgres, sqlite, etc.)
-* Setup Prysql from ActiveRecord configuration
+* Add database support (Postgres, sqlite, etc.)
+* Allow for color customization
+* Automatic setup from ActiveRecord configuration if present
 * Increase test coverage
