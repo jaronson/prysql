@@ -9,10 +9,10 @@ class Prysql::Interface
 
   attr_reader :client
 
-  def initialize(opts = {})
-    opts = opts.clone
+  def initialize(attrs = {})
+    opts = attrs.clone
 
-    @host = opts.delete(:host) || 'localhost'
+    @host     = opts.delete(:host) || 'localhost'
     @username = opts.delete(:username)
     @password = opts.delete(:password)
     @database = opts.delete(:database)
