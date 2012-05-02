@@ -1,4 +1,5 @@
 module Prysql::Commands
+  include Pry::Helpers::BaseHelpers
   include Pry::Helpers::CommandHelpers
 
   @@commands_with_descriptions = nil
@@ -10,26 +11,27 @@ module Prysql::Commands
   end
 
   def self.available_commands
-    @@available_commands ||= commands_with_descriptions.map{|cmd, opts| cmd }
+    @@available_commands ||= commands_with_descriptions.map{|cmd, attrs| cmd }
   end
 
   def self.formatted_commands
     return @@formatted_commands if @@formatted_commands
 
-    commands = commands_with_descriptions.map{|cmd, opts|
-      example = ''
-      example = "e.g.: `#{opts[:ex].join(', ')}`" if opts[:ex]
-      [ cmd, opts[:desc], example ]
+    rows  = []
+    commands_with_descriptions.each{|cmd, attrs|
+      examples = attrs[:ex].dup rescue nil
+      rows << [ cmd.to_s, attrs[:desc], examples ? "e.g.: `#{examples.shift}`" : '' ]
+      examples.each{|ex| rows << [ '', '', "      `#{ex}`"]} if examples
     }
 
-    @@formatted_commands = Prysql::Shell.new.format_table(commands, { :indent => 2, :lang => :text })
+    @@formatted_commands = Prysql::Shell.new.format_table(rows, { :indent => 1, :lang => :text })
   end
 
   def self.describe(cmd, desc, options = {})
     attrs = { desc: desc }
 
     if options[:ex]
-      examples = attrs[:ex].respond_to?(:each) ? attrs[:ex].join("\n") : attrs[:ex]
+      examples   = options[:ex].respond_to?(:each) ? options[:ex] : [options[:ex]]
       attrs[:ex] = examples
     end
 
@@ -49,7 +51,7 @@ module Prysql::Commands
   describe :help, 'Show the help message.'
   def help(cmd = nil, args = [])
     if cmd == 'help'
-      return shell.say(Prysql::CommandSet.commands['prysql'].new.help)
+      shell.say(Prysql::CommandSet.commands['prysql'].new.help)
     elsif has_command?(cmd)
       method     = command_to_method(cmd)
       parameters = parameters_for(method)
@@ -71,16 +73,8 @@ module Prysql::Commands
 
   describe :info, 'Show the mysql client information'
   def info
-    shell.say_status('Prysql Info')
-    table = [
-      [ :host, host ],
-      [ :username, username ],
-      [ :database, database ]
-    ]
-    shell.print_table(table, :indent  => 2, :format => :ruby)
-
-    shell.say_status('Mysql2 Client Settings')
-    shell.print_hash(client.query_options, { :indent => 2 })
+    shell.say_status('Prysql Settings')
+    shell.print_hash(client.query_options, { :indent => 1 })
   end
 
   describe :setup, 'Setup the prysql interface', args: 'options - Hash'
@@ -108,23 +102,24 @@ module Prysql::Commands
   end
 
   describe :show_columns, 'Display columns in alphabetical order.'
-  def show_columns(table)
+  def show_columns(table, opts = {})
     column_select({
       :conditions => "table_name = '#{table}'",
-      :order      => 'column_name'
+      :order      => 'column_name',
+      :options    => opts
     })
   end
 
   # TODO: Patternize it!
-  describe 'Search for columns across all tables.', {
+  describe :search_columns, 'Search for columns across all tables.', {
     args: [ 'search - (sub)string, SQL regex or Regex' ],
     ex:   [ 'prysql search-columns employ', 'prysql search-columns %employ', 'prysql search-columns /^employ/' ]
   }
-  def search_columns(search)
+  def search_columns(search, opts = {})
     result = column_select({
       :conditions => "column_name LIKE '%#{search}%'",
       :order      => 'table_name',
-      :options    => { :highlight => search }
+      :options    => { :highlight => search }.merge(opts)
     })
   end
 
@@ -194,7 +189,8 @@ module Prysql::Commands
   end
 
   def has_command?(cmd)
-    Prysql::Commands.available_commands.include?(cmd)
+    return false if cmd.nil?
+    Prysql::Commands.available_commands.include?(cmd.to_sym)
   end
 
   def command_is_sql?(cmd)
@@ -205,8 +201,6 @@ module Prysql::Commands
   def shell
     @shell ||= Prysql::Shell.new
   end
-
-  private
 
   def column_select(params = {})
     select = [%{
@@ -249,14 +243,14 @@ module Prysql::Commands
   end
 
   def parameters_for(method)
-    self.class.instance_method(method).parameters
+    Prysql::Commands.instance_method(method).parameters
   end
 
   def command_to_method(cmd)
-    self.class.command_to_method(cmd)
+    Prysql::Commands.command_to_method(cmd)
   end
 
   def method_to_command(meth)
-    self.class.method_to_command(meth)
+    Prysql::Commands..method_to_command(meth)
   end
 end
