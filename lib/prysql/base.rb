@@ -31,7 +31,7 @@ BANNER
       def options(opt)
         opt.on :v, :vertical, 'Print output in vertical format',       :optional => true
         opt.on :c, :clear,    'Clear the current input statement',     :optional => true
-        opt.on :s, :search,   'Highlight given string',                :optional => true
+        opt.on :g, :grep,     'Grep for the given string',             :optional => true, :argument => true
       end
 
       def process
@@ -48,7 +48,10 @@ BANNER
         interface     = Prysql.interface
         cmd, cmd_opts = args.shift, {}
 
-        cmd_opts[:vertical] = true if opts.present?(:vertical)
+        return interface.help(cmd) if cmd == 'help'
+
+        cmd_opts[:vertical]  = true if opts.present?(:vertical)
+        cmd_opts[:highlight] = opts[:grep] if opts.present?(:grep)
 
         if interface.has_command?(cmd)
           interface.execute_command(cmd, args, cmd_opts)
