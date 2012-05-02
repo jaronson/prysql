@@ -135,9 +135,8 @@ class Prysql::Shell < Thor::Shell::Color
   end
 
   def format_sql_rows(rows, options)
-    rows = colorize_sql_rows(format_table_rows(rows, options))
+    rows = colorize_sql_rows(format_table_rows(rows, options)).map{|row| row + ' |'}
     highlight(options[:highlight], rows) if options[:highlight]
-    rows
   end
 
   def format_table_rows(rows, options)
@@ -183,7 +182,7 @@ class Prysql::Shell < Thor::Shell::Color
 
   def colorize_sql_rows(rows)
     return rows unless Pry.color
-    rows.map{|row| row.split('|').map{|v| colorize_sql_token(v) }.join('|') + ' |' }
+    rows.map{|row| row.split('|').map{|v| colorize_sql_token(v) }.join('|')}
   end
 
   def colorize_sql_token(str)
@@ -227,7 +226,7 @@ class Prysql::Shell < Thor::Shell::Color
         offset = Regexp.last_match.offset(0)
         [
           row[0..offset[0]-1],
-          set_color(row[offset[0]..offset[1]-1], :green, :bold),
+          set_color(row[offset[0]..offset[1]-1], :on_yellow, :black),
           row[offset[1]..row.size]
         ].join('')
       else
